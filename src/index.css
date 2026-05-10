@@ -1,0 +1,36 @@
+:root {
+  --ink: #e7efff;
+  --body: 'Gill Sans', 'Trebuchet MS', Verdana, sans-serif;
+  --display: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+
+  font-family: var(--body);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--ink);
+  background-color: #08142c;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background-color: #08142c;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+button {
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
+}
