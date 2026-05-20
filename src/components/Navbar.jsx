@@ -12,7 +12,9 @@ function Navbar({
   const navItems = ['Dashboard', 'Reports', 'ISO', 'DCC']
 
   return (
-    <header className="topbar">
+    /* We add position: relative and z-index: 100 to the top header wrapper 
+       to make sure it sits completely above the glassmorphism grid blur effects below it. */
+    <header className="topbar" style={{ position: 'relative', zIndex: 100 }}>
       <div className="brand badge">
         <span className="badge-text">QFlow</span>
       </div>
@@ -31,13 +33,18 @@ function Navbar({
       <div className="search">
         <input type="search" placeholder="Search" />
       </div>
-      <UserMenu
-        isOpen={isUserMenuOpen}
-        onToggle={onToggleMenu}
-        onLogout={onLogout}
-        isNotificationsOpen={isNotificationsOpen}
-        onToggleNotifications={onToggleNotifications}
-      />
+      
+      {/* Wrapping the UserMenu inside a container that forces it to stack highest */}
+      <div style={{ position: 'relative', zIndex: 110 }}>
+        <UserMenu
+          isOpen={isUserMenuOpen}
+          onToggle={onToggleMenu}
+          onLogout={onLogout}
+          onPageChange={onPageChange}
+          isNotificationsOpen={isNotificationsOpen}
+          onToggleNotifications={onToggleNotifications}
+        />
+      </div>
     </header>
   )
 }

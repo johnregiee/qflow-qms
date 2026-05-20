@@ -21,7 +21,18 @@ function DashboardPage({
         isNotificationsOpen={isNotificationsOpen}
         onToggleNotifications={onToggleNotifications}
       />
-      <Dashboard />
+      {/* We are now forwarding all menu states and page routing properties 
+        so the main canvas elements and dropdown triggers can change pages successfully.
+      */}
+      <Dashboard 
+        activePage={activePage}
+        onPageChange={onPageChange}
+        isUserMenuOpen={isUserMenuOpen}
+        onToggleMenu={onToggleMenu}
+        onLogout={onLogout}
+        isNotificationsOpen={isNotificationsOpen}
+        onToggleNotifications={onToggleNotifications}
+      />
     </main>
   )
 }
