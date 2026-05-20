@@ -130,22 +130,17 @@ export default function App() {
 
 // --- MULTI-STEP NOTIFICATIONS & VERIFICATION WIZARD MODAL COMPONENT ---
 function NotificationsModal({ isOpen, onClose }) {
-  // Navigation tracking workflow modes: 'list' | 'detail' | 'verify' | 'upload'
   const [viewMode, setViewMode] = useState('list');
   const [verifyDetails, setVerifyDetails] = useState('');
-  
-  // Left sidebar selector option track for the integrated media file explorer modal view
   const [activeExplorerTab, setActiveExplorerTab] = useState('Download');
 
   if (!isOpen) return null;
 
-  // Resets modal wizard layout parameters safely on close actions
   const handleCloseDismiss = () => {
     setViewMode('list');
     onClose();
   };
 
-  // Mock array rendering 18 thumbnail layout placeholder cross grids to match wireframe exactly
   const mediaGridPlaceholders = Array.from({ length: 18 }, (_, index) => index);
 
   return (
@@ -178,8 +173,6 @@ function NotificationsModal({ isOpen, onClose }) {
           transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
-        
-        {/* --- RENDERING STANDALONE HEADER BUTTONS FOR NORMAL STEPS --- */}
         {viewMode !== 'upload' && (
           <>
             <button 
@@ -209,7 +202,6 @@ function NotificationsModal({ isOpen, onClose }) {
           </>
         )}
 
-        {/* --- STEP VIEW MODE 1: SUMMARY NOTICES LIST --- */}
         {viewMode === 'list' && (
           <div 
             onClick={() => setViewMode('detail')} 
@@ -229,7 +221,6 @@ function NotificationsModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* --- STEP VIEW MODE 2: SPLIT SCREEN REQUEST INSPECTION GRID --- */}
         {viewMode === 'detail' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', textAlign: 'left' }}>
             <div style={{ background: 'rgba(6, 182, 212, 0.05)', borderLeft: '3px solid #06b6d4', padding: '16px', borderRadius: '4px' }}>
@@ -257,7 +248,6 @@ function NotificationsModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* --- STEP VIEW MODE 3: FINALIZE VERIFY EFFECTIVENESS FORM PANEL --- */}
         {viewMode === 'verify' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', margin: 0, textAlign: 'left' }}>
             <div>
@@ -284,10 +274,8 @@ function NotificationsModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* --- STEP VIEW MODE 4: ASSET UPLOAD FILE MANAGER GRID PANEL --- */}
         {viewMode === 'upload' && (
           <div style={{ display: 'flex', height: '520px', width: '100%', position: 'relative' }}>
-            
             <button 
               type="button" 
               onClick={() => setViewMode('verify')}
@@ -296,7 +284,6 @@ function NotificationsModal({ isOpen, onClose }) {
               <X size={18} />
             </button>
 
-            {/* Left Sidebar Tab Switch Column */}
             <div style={{ width: '180px', background: 'rgba(8, 18, 35, 0.4)', borderRight: '1px solid rgba(255, 255, 255, 0.08)', padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: '8px', boxSizing: 'border-box' }}>
               <h4 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '600', color: '#22d3ee', textAlign: 'left', tracking: '0.02em' }}>Location</h4>
               <button type="button" onClick={() => setActiveExplorerTab('Download')} style={{ ...explorerTabButtonStyle, background: activeExplorerTab === 'Download' ? 'rgba(6, 182, 212, 0.12)' : 'transparent', color: activeExplorerTab === 'Download' ? '#22d3ee' : '#94a3b8' }}><Folder size={14} /> Download</button>
@@ -305,13 +292,11 @@ function NotificationsModal({ isOpen, onClose }) {
               <button type="button" onClick={() => setActiveExplorerTab('Videos')} style={{ ...explorerTabButtonStyle, background: activeExplorerTab === 'Videos' ? 'rgba(6, 182, 212, 0.12)' : 'transparent', color: activeExplorerTab === 'Videos' ? '#22d3ee' : '#94a3b8' }}><Video size={14} /> Videos</button>
             </div>
 
-            {/* Right Side File Grid & Action Footer Section */}
             <div style={{ flex: '1', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
               <div style={{ padding: '24px 24px 12px 24px', textAlign: 'left' }}>
                 <h3 style={{ margin: '0', fontSize: '18px', fontWeight: '600', color: '#f8fafc' }}>{activeExplorerTab}</h3>
               </div>
 
-              {/* Central Thumbnail Grid Canvas Container */}
               <div style={{ flex: '1', padding: '0 24px 24px 24px', display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '12px', overflowY: 'auto', maxHeight: '360px', boxSizing: 'border-box' }}>
                 {mediaGridPlaceholders.map((item) => (
                   <div 
@@ -326,22 +311,19 @@ function NotificationsModal({ isOpen, onClose }) {
                 ))}
               </div>
 
-              {/* Bottom Actions Confirmation Row Footer Panel */}
               <div style={{ padding: '16px 24px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(8, 18, 35, 0.2)', display: 'flex', justifyContent: 'flex-end', gap: '12px', boxSizing: 'border-box' }}>
                 <button type="button" onClick={() => setViewMode('verify')} style={explorerFooterCancelButtonStyle} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>Cancel</button>
                 <button type="button" onClick={() => setViewMode('verify')} style={explorerFooterUploadButtonStyle} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>Upload</button>
               </div>
             </div>
-
           </div>
         )}
-
       </div>
     </div>
   );
 }
 
-// --- SAFE INTEGRATED PROFILE LAYOUT VIEW WITH SETTINGS SUB-TABS ---
+// --- SAFE INTEGRATED PROFILE LAYOUT VIEW WITH FIX FOR SETTINGS BLANK SUB-TAB ---
 function UserInformationPage({
   activePage,
   onPageChange,
@@ -356,7 +338,7 @@ function UserInformationPage({
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '64px', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '0 24px', background: 'rgba(10, 20, 36, 0.8)', backdropFilter: 'blur(12px)', position: 'relative', zIndex: '50' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '64px', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '0 24px', background: 'rgba(10, 20, 36, 0.8)', backdropFilter: 'blur(12px)', position: 'relative', zIndex: '150' }}>
         <div onClick={() => onPageChange('Dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
           <div style={{ display: 'flex', height: '32px', width: '32px', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', background: 'linear-gradient(135deg, #22d3ee, #3b82f6)', fontWeight: 'bold', color: 'white' }}>
             <span style={{ alignSelf: 'center' }}>Q</span>
@@ -389,10 +371,10 @@ function UserInformationPage({
       </header>
 
       {isUserMenuOpen && (
-        <div style={{ position: 'absolute', right: '24px', top: '60px', background: '#0d1b31', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', padding: '4px', minWidth: '160px', display: 'flex', flexDirection: 'column', zIndex: '100', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}>
-          <button onClick={() => onPageChange('Profile')} style={{ background: 'none', border: 'none', color: '#22d3ee', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>User Information</button>
-          <button onClick={() => onPageChange('Profile')} style={{ background: 'none', border: 'none', color: '#cbd5e1', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>Settings</button>
-          <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#ef4444', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>Logout</button>
+        <div style={{ position: 'absolute', right: '24px', top: '60px', background: '#0d1b31', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', padding: '4px', minWidth: '160px', display: 'flex', flexDirection: 'column', zIndex: '200', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}>
+          <button onClick={() => onPageChange('Profile')} style={{ background: 'none', border: 'none', color: '#cbd5e1', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>User Information</button>
+          <button onClick={() => { setCurrentTab('Settings'); onToggleMenu(); }} style={{ background: 'none', border: 'none', color: '#22d3ee', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}>Settings</button>
+          <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#ef4444', padding: '10px 12px', textAlign: 'left', fontSize: '13px', cursor: 'pointer', borderRadius: '4px', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '4px', paddingTop: '8px' }}>Logout</button>
         </div>
       )}
 
@@ -405,7 +387,7 @@ function UserInformationPage({
         <div style={{ width: '100%', background: 'rgba(13, 26, 45, 0.65)', border: '1px solid rgba(255, 255, 255, 0.12)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: '0 12px 12px 12px', padding: '32px', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1)', boxSizing: 'border-box' }}>
           {currentTab === 'User Information' ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div style={{ display: 'flex', textDirection: 'row', alignItems: 'center', gap: '20px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '24px' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '20px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '24px' }}>
                 <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.15)', border: '2px solid #06b6d4', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 15px rgba(6, 182, 212, 0.2)' }}>
                   <UserIcon size={32} style={{ color: '#22d3ee' }} />
                 </div>
@@ -482,38 +464,15 @@ function UserInformationPage({
   );
 }
 
-// --- SHARED USER DROPDOWN COMPONENT HOOK ---
-export function UserMenu({ isOpen, onToggle, onLogout, onPageChange, onToggleNotifications }) {
-  return (
-    <div className="user">
-      <button className="bell-button" type="button" onClick={onToggleNotifications} aria-label="Show notifications">
-        <span className="bell" aria-hidden="true"></span>
-      </button>
-      <button className="user-trigger" type="button" onClick={onToggle} aria-haspopup="menu" aria-expanded={isOpen}>
-        <div className="avatar" aria-hidden="true"></div>
-        <div className="user-info">
-          <span className="user-name">Name of the User</span>
-          <span className="user-role">Position</span>
-        </div>
-      </button>
-      {isOpen ? (
-        <div className="user-menu" role="menu">
-          <button className="menu-item" type="button" role="menuitem" onClick={() => onPageChange('Profile')}>User Information</button>
-          <button className="menu-item" type="button" role="menuitem" onClick={() => onPageChange('Profile')}>Settings</button>
-          <button className="menu-item" type="button" role="menuitem" onClick={onLogout}>Logout</button>
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-// --- REUSABLE MODAL LAYOUT STYLE PARAMETERS ---
-const backLinkButtonStyle = { background: 'none', border: 'none', color: '#22d3ee', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', padding: '0' };
-const detailWindowBlockStyle = { flex: '1', background: 'rgba(8, 18, 35, 0.35)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '20px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' };
-const innerWireframeFrameStyle = { width: '100%', height: '200px', background: 'rgba(8, 18, 35, 0.5)', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' };
+// --- INTERNAL LAYOUT DESIGN ATTRIBUTES ---
+const subLabelStyle = { display: 'block', fontSize: '11px', color: '#94a3b8', marginBottom: '6px' };
+const subInputStyle = { width: '100%', height: '36px', background: 'rgba(8, 18, 35, 0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0 12px', fontSize: '13px', color: '#e2e8f0', outline: 'none', boxSizing: 'border-box' };
 const formLabelStyle = { display: 'block', fontSize: '12px', fontWeight: '500', color: '#94a3b8', marginBottom: '6px', textAlign: 'left' };
 const formTextareaStyle = { width: '100%', height: '140px', background: 'rgba(8, 18, 35, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', padding: '12px', fontSize: '13px', color: '#e2e8f0', outline: 'none', resize: 'none', boxSizing: 'border-box' };
 const gradientExecuteButtonStyle = { background: 'linear-gradient(135deg, #06b6d4, #3b82f6)', border: 'none', color: 'white', padding: '12px 48px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 15px rgba(6, 182, 212, 0.25)' };
+const backLinkButtonStyle = { background: 'none', border: 'none', color: '#22d3ee', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', padding: '0' };
+const detailWindowBlockStyle = { flex: '1', background: 'rgba(8, 18, 35, 0.35)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '20px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' };
+const innerWireframeFrameStyle = { width: '100%', height: '200px', background: 'rgba(8, 18, 35, 0.5)', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '8px', display: 'flex', alignItems: 'center', justify_content: 'center', alignItems: 'center', justifyContent: 'center' };
 
 const explorerTabButtonStyle = {
   width: '100%', border: 'none', textAlign: 'left', padding: '10px 14px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', transition: 'all 0.2s ease'
